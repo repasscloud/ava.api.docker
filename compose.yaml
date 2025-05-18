@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   ava-api:
     image: repasscloud/ava-api:20250518
