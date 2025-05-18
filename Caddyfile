@@ -1,0 +1,4 @@
+your.domain.com {
+    reverse_proxy ava-api:5165
+    encode gzip
+}

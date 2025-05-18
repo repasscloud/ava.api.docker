@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  ava-api:
+    image: ava-api:20250518
+    expose:
+      - "5165"  # internal only
+    restart: unless-stopped
+    environment:
+      - ConnectionStrings__PostgresConnection
+      - Amadeus__ClientId
+      - Amadeus__ClientSecret
+      - Amadeus__Url__FlightOffer
+      - AvaLicense__SecretKey
+      - AvaSettings__GlobalSalt
+      - AvaSettings__ResendKey
+      - JwtSettings__SecretKey
+      - JwtSettings__Audience
+      - GitHub__Repos__0__Name
+      - GitHub__Repos__0__Owner
+      - GitHub__Repos__0__Repo
+      - GitHub__Repos__0__ApiKey
+      - Kestrel__Endpoints__Http__Url=http://+:5165
+      - Logging__LogLevel__Default
+      - Logging__LogLevel__Microsoft.AspNetCore
+      - Logging__LogLevel__Microsoft.EntityFrameworkCore.Database.Command
+      - AllowedHosts=*
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:5165/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
