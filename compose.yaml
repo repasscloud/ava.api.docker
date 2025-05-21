@@ -5,6 +5,9 @@ services:
       - "5165"  # internal only
     restart: unless-stopped
     environment:
+      - Logging__LogLevel__Default=${Logging__LogLevel__Default}
+      - Logging__LogLevel__Microsoft_AspNetCore=${Logging__LogLevel__Microsoft_AspNetCore}
+      - Logging__LogLevel__Microsoft_EntityFrameworkCore_Database_Command=${Logging__LogLevel__Microsoft_EntityFrameworkCore_Database_Command}
       - ConnectionStrings__PostgresConnection
       - Amadeus__ClientId
       - Amadeus__ClientSecret
