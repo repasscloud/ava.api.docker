@@ -1,6 +1,6 @@
 services:
   ava-api:
-    image: repasscloud/ava-api:2.3.11
+    image: repasscloud/ava-api:${new_version}
     expose:
       - "5165"  # internal only
     restart: unless-stopped
